@@ -11,9 +11,6 @@ green_buildings = subset(buildings, green_rating==1)
 non_green_buildings = subset(buildings, green_rating!=1)
 ```
 
-![Image of Yaktocat]
-(https://github.com/sujinru/STA-380-Exercise-1/blob/master/10-dithering-opt.jpg)
-
 ## Green Building
 
 > I began by cleaning the data a little bit. In particular, I noticed that a handful of the buildings in the data set had very low occupancy rates (less than 10% of available space occupied). I decided to remove these buildings from consideration, on the theory that these buildings might have something weird going on with them, and could potentially distort the analysis.

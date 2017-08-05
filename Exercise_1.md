@@ -1,6 +1,3 @@
-\[Image of Yaktocat\]
-(<https://github.com/sujinru/STA-380-Exercise-1/blob/master/10-dithering-opt.jpg>)
-
 Green Building
 --------------
 
