@@ -2,7 +2,7 @@
 title: "E1"
 author: "Jinru Su"
 date: "8/5/2017"
-output: html_document
+output: md_document
 ---
 ```{r setup, include = FALSE}
 library(dplyr)
@@ -10,6 +10,9 @@ buildings = read.csv("~/Desktop/UT/courses/summer/STA 380/Exercise 1/greenbuildi
 green_buildings = subset(buildings, green_rating==1)
 non_green_buildings = subset(buildings, green_rating!=1)
 ```
+
+![Image of Yaktocat]
+(https://github.com/sujinru/STA-380-Exercise-1/blob/master/10-dithering-opt.jpg)
 
 ## Green Building
 
