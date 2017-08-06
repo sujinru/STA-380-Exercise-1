@@ -1,5 +1,5 @@
 ---
-title: "E1"
+title: "Green Buildings"
 author: "Jinru Su"
 date: "8/5/2017"
 output: md_document
