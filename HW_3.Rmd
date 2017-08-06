@@ -2,7 +2,7 @@
 title: "HW_3"
 author: "Suyi TU"
 date: "2017/8/6"
-output: html_document
+output: md_document
 ---
 
 ```{r setup,echo=FALSE,include=FALSE}
