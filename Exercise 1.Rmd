@@ -15,7 +15,7 @@ non_green_buildings = subset(buildings, green_rating!=1)
 
 > I began by cleaning the data a little bit. In particular, I noticed that a handful of the buildings in the data set had very low occupancy rates (less than 10% of available space occupied). I decided to remove these buildings from consideration, on the theory that these buildings might have something weird going on with them, and could potentially distort the analysis.
 
-Is this data cleaning step nessacery? We looked into the distribution of leasing rate of green buildings and non-green buildings. Interestingly, the distribution of non-green buildings' leasing rate has a shoot up in the range below 10%. Therefore, we hold the same belief that these buildings are "weired" and should be removed from our analysis.
+Is this data cleaning step neccesary? We looked into the distribution of leasing rate of green buildings and non-green buildings. Interestingly, the distribution of non-green buildings' leasing rate has a shoot up in the range below 10%. Therefore, we hold the same belief that these buildings are "weired" and should be removed from our analysis.
 
 ```{r occupancy}
 par(mfrow=c(1,2))

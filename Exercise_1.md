@@ -8,7 +8,7 @@ Green Building
 > might have something weird going on with them, and could potentially
 > distort the analysis.
 
-Is this data cleaning step nessacery? We looked into the distribution of
+Is this data cleaning step neccesary? We looked into the distribution of
 leasing rate of green buildings and non-green buildings. Interestingly,
 the distribution of non-green buildings' leasing rate has a shoot up in
 the range below 10%. Therefore, we hold the same belief that these
