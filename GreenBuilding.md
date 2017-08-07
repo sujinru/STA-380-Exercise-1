@@ -39,7 +39,7 @@ higher rent. We decided to analyze the buildings with ages less than 50.
     abline(v=mean(nongreen_median$age),col='grey',lwd=2)
     abline(v=mean(green_median$age),col='red',lwd=2)
     points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
-    legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Avg-Age:Median-Price Non-Green Buildings','Green buildings','Avg-Age:Median-Price Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
+    legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Median Age Non-Green Buildings','Green buildings','Median Age Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 
 ![](GreenBuilding_files/figure-markdown_strict/con_age-1.png)
 

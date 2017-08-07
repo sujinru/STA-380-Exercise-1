@@ -6,7 +6,7 @@ output: md_document
 ---
 ```{r setup, include = FALSE}
 library(dplyr)
-buildings = read.csv('~/Documents/SourceTree/STA380/data/greenbuildings.csv')
+buildings = read.csv('~/Downloads/greenbuildings.csv')
 green_buildings = subset(buildings, green_rating==1)
 non_green_buildings = subset(buildings, green_rating!=1)
 ```
@@ -35,7 +35,7 @@ plot(non_green_buildings$age, non_green_buildings$Rent, col="grey", pch=19, cex=
 abline(v=mean(nongreen_median$age),col='grey',lwd=2)
 abline(v=mean(green_median$age),col='red',lwd=2)
 points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
-legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Avg-Age:Median-Price Non-Green Buildings','Green buildings','Avg-Age:Median-Price Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
+legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Median Age Non-Green Buildings','Green buildings','Median Age Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 ```
 
 Another confounding variable is class. As shown in charts below, class A buildings have a definite premium rent over other classes and green buildings have an enormously high percentage falling into class A and class B. Therefore, we removed buildings in class C in our analysis.
