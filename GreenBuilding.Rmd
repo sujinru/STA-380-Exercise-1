@@ -49,14 +49,6 @@ pie(pie_chart[2,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','
 pie(pie_chart[1,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Non-green Buildings", init.angle  = 90)
 ```
 
-```{r median_Class}
-par(mfrow=c(1,2))
-barplot(table(buildings$class[buildings$Rent==median(green_buildings$Rent)&buildings$green_rating==1])/nrow(green_median),names=c('classA','classB'))
-title('Class:Median-Price Green Buildings',cex.main=0.9)
-barplot(table(buildings$class[buildings$Rent==median(non_green_buildings$Rent)&buildings$green_rating==0])/nrow(nongreen_median),names=c('classA','classB','classC'))
-title('Class:Median-Price Non-Green Buildings',cex.main=0.9)
-```
-
 ```{r confounding}
 green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
 non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))

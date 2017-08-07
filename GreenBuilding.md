@@ -60,14 +60,6 @@ class B. Therefore, we removed buildings in class C in our analysis.
 
 ![](GreenBuilding_files/figure-markdown_strict/con_class-2.png)
 
-    par(mfrow=c(1,2))
-    barplot(table(buildings$class[buildings$Rent==median(green_buildings$Rent)&buildings$green_rating==1])/nrow(green_median),names=c('classA','classB'))
-    title('Class:Median-Price Green Buildings',cex.main=0.9)
-    barplot(table(buildings$class[buildings$Rent==median(non_green_buildings$Rent)&buildings$green_rating==0])/nrow(nongreen_median),names=c('classA','classB','classC'))
-    title('Class:Median-Price Non-Green Buildings',cex.main=0.9)
-
-![](GreenBuilding_files/figure-markdown_strict/median_Class-1.png)
-
     green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
     non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
 
