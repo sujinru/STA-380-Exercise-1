@@ -19,7 +19,7 @@ buildings are "weired" and should be removed from our analysis.
     hist(non_green_buildings$leasing_rate, main="Non-Green Buildings", xlab="Leasing Rate", ylab="", 
          col=c('red', rep('white',9)))
 
-![](Exercise_1_files/figure-markdown_strict/occupancy-1.png)
+![](GreenBuilding_files/figure-markdown_strict/occupancy-1.png)
 
 > The median market rent in the non-green buildings was $25 per square
 > foot per year, while the median market rent in the green buildings was
@@ -41,7 +41,7 @@ higher rent. We decided to analyze the buildings with ages less than 50.
     points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
     legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Avg-Age:Median-Price Non-Green Buildings','Green buildings','Avg-Age:Median-Price Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 
-![](Exercise_1_files/figure-markdown_strict/con_age-1.png)
+![](GreenBuilding_files/figure-markdown_strict/con_age-1.png)
 
 Another confounding variable is class. As shown in charts below, class A
 buildings have a definite premium rent over other classes and green
@@ -51,14 +51,14 @@ class B. Therefore, we removed buildings in class C in our analysis.
     buildings$class = ifelse(buildings$class_a==1, 1, ifelse(buildings$class_b==1, 2, 3))
     boxplot(buildings$Rent~buildings$class,outline=FALSE, names = c("Class A", "Class B", "Class C"), main="Rent vs. Class")
 
-![](Exercise_1_files/figure-markdown_strict/con_class-1.png)
+![](GreenBuilding_files/figure-markdown_strict/con_class-1.png)
 
     par(mfrow=c(1,2))
     pie_chart = table(buildings$green_rating, buildings$class)
     pie(pie_chart[2,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Green Buildings")
     pie(pie_chart[1,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Non-green Buildings", init.angle  = 90)
 
-![](Exercise_1_files/figure-markdown_strict/con_class-2.png)
+![](GreenBuilding_files/figure-markdown_strict/con_class-2.png)
 
     par(mfrow=c(1,2))
     barplot(table(buildings$class[buildings$Rent==median(green_buildings$Rent)&buildings$green_rating==1])/nrow(green_median),names=c('classA','classB'))
@@ -66,7 +66,7 @@ class B. Therefore, we removed buildings in class C in our analysis.
     barplot(table(buildings$class[buildings$Rent==median(non_green_buildings$Rent)&buildings$green_rating==0])/nrow(nongreen_median),names=c('classA','classB','classC'))
     title('Class:Median-Price Non-Green Buildings',cex.main=0.9)
 
-![](Exercise_1_files/figure-markdown_strict/median_Class-1.png)
+![](GreenBuilding_files/figure-markdown_strict/median_Class-1.png)
 
     green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
     non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
@@ -116,7 +116,7 @@ than 50 years old and in class A or B and here is the plot:
     lines(newdata$age, predictions, type="l", col='red', lwd=2)
     legend(32, 20000, c("KNN Regression"), lwd=2.5,col="red")
 
-![](Exercise_1_files/figure-markdown_strict/over_age-1.png)
+![](GreenBuilding_files/figure-markdown_strict/over_age-1.png)
 
 Each building is a gray dot in the plot. We draw a line with KNN (k set
 to 20) to show a smooth general trend of LR over age. It turns out that
