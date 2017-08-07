@@ -8,7 +8,7 @@ Green Building
 > might have something weird going on with them, and could potentially
 > distort the analysis.
 
-Is this data cleaning step nessacery? We looked into the distribution of
+Is this data cleaning step necessary? We looked into the distribution of
 leasing rate of green buildings and non-green buildings. Interestingly,
 the distribution of non-green buildings' leasing rate has a shoot up in
 the range below 10%. Therefore, we hold the same belief that these
@@ -27,15 +27,19 @@ buildings are "weired" and should be removed from our analysis.
 
 The way the author calculates the premium rent for green buildings is
 too generic as there are confounding variables. It is important to
-control the confounding variables in our analysis so that we can see the
-how green rating influences the rent. Age is one of the confounding
+control the confounding variables in our analysis so that we can see how
+green rating influences the rent. Age is one of the confounding
 variables. As shown in the plot, green buildings are highly concentrated
 in the lower range of age, which means they are relatively new, thus
 higher rent. We decided to analyze the buildings with ages less than 50.
 
+    green_median = green_buildings[green_buildings$Rent == median(green_buildings$Rent),]
+    nongreen_median = non_green_buildings[non_green_buildings$Rent == median(non_green_buildings$Rent),]
     plot(non_green_buildings$age, non_green_buildings$Rent, col="grey", pch=19, cex=0.5, xlab = "Buildings Age", ylab="Annual Rent") 
+    abline(v=mean(nongreen_median$age),col='grey',lwd=2)
+    abline(v=mean(green_median$age),col='red',lwd=2)
     points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
-    legend(x = 120, y= 230, legend = c("Green Buildings", "Non-Green Buildings"), fill=c('red', 'grey'))
+    legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Avg-Age:Median-Price Non-Green Buildings','Green buildings','Avg-Age:Median-Price Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 
 ![](Exercise_1_files/figure-markdown_strict/con_age-1.png)
 
@@ -55,6 +59,14 @@ class B. Therefore, we removed buildings in class C in our analysis.
     pie(pie_chart[1,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Non-green Buildings", init.angle  = 90)
 
 ![](Exercise_1_files/figure-markdown_strict/con_class-2.png)
+
+    par(mfrow=c(1,2))
+    barplot(table(buildings$class[buildings$Rent==median(green_buildings$Rent)&buildings$green_rating==1])/nrow(green_median),names=c('classA','classB'))
+    title('Class:Median-Price Green Buildings',cex.main=0.9)
+    barplot(table(buildings$class[buildings$Rent==median(non_green_buildings$Rent)&buildings$green_rating==0])/nrow(nongreen_median),names=c('classA','classB','classC'))
+    title('Class:Median-Price Non-Green Buildings',cex.main=0.9)
+
+![](Exercise_1_files/figure-markdown_strict/median_Class-1.png)
 
     green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
     non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
