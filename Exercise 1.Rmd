@@ -6,7 +6,7 @@ output: md_document
 ---
 ```{r setup, include = FALSE}
 library(dplyr)
-buildings = read.csv("~/Desktop/UT/courses/summer/STA 380/Exercise 1/greenbuildings.csv")
+buildings = read.csv('~/Documents/SourceTree/STA380/data/greenbuildings.csv')
 green_buildings = subset(buildings, green_rating==1)
 non_green_buildings = subset(buildings, green_rating!=1)
 ```
@@ -15,7 +15,7 @@ non_green_buildings = subset(buildings, green_rating!=1)
 
 > I began by cleaning the data a little bit. In particular, I noticed that a handful of the buildings in the data set had very low occupancy rates (less than 10% of available space occupied). I decided to remove these buildings from consideration, on the theory that these buildings might have something weird going on with them, and could potentially distort the analysis.
 
-Is this data cleaning step nessacery? We looked into the distribution of leasing rate of green buildings and non-green buildings. Interestingly, the distribution of non-green buildings' leasing rate has a shoot up in the range below 10%. Therefore, we hold the same belief that these buildings are "weired" and should be removed from our analysis.
+Is this data cleaning step necessary? We looked into the distribution of leasing rate of green buildings and non-green buildings. Interestingly, the distribution of non-green buildings' leasing rate has a shoot up in the range below 10%. Therefore, we hold the same belief that these buildings are "weired" and should be removed from our analysis.
 
 ```{r occupancy}
 par(mfrow=c(1,2))
@@ -26,12 +26,16 @@ hist(non_green_buildings$leasing_rate, main="Non-Green Buildings", xlab="Leasing
 
 > The median market rent in the non-green buildings was $25 per square foot per year, while the median market rent in the green buildings was $27.60 per square foot per year: about $2.60 more per square foot. 
 
-The way the author calculates the premium rent for green buildings is too generic as there are confounding variables. It is important to control the confounding variables in our analysis so that we can see the how green rating influences the rent.
+The way the author calculates the premium rent for green buildings is too generic as there are confounding variables. It is important to control the confounding variables in our analysis so that we can see how green rating influences the rent.
 Age is one of the confounding variables. As shown in the plot, green buildings are highly concentrated in the lower range of age, which means they are relatively new, thus higher rent. We decided to analyze the buildings with ages less than 50. 
 ```{r con_age}
+green_median = green_buildings[green_buildings$Rent == median(green_buildings$Rent),]
+nongreen_median = non_green_buildings[non_green_buildings$Rent == median(non_green_buildings$Rent),]
 plot(non_green_buildings$age, non_green_buildings$Rent, col="grey", pch=19, cex=0.5, xlab = "Buildings Age", ylab="Annual Rent") 
+abline(v=mean(nongreen_median$age),col='grey',lwd=2)
+abline(v=mean(green_median$age),col='red',lwd=2)
 points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
-legend(x = 120, y= 230, legend = c("Green Buildings", "Non-Green Buildings"), fill=c('red', 'grey'))
+legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Avg-Age:Median-Price Non-Green Buildings','Green buildings','Avg-Age:Median-Price Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 ```
 
 Another confounding variable is class. As shown in charts below, class A buildings have a definite premium rent over other classes and green buildings have an enormously high percentage falling into class A and class B. Therefore, we removed buildings in class C in our analysis.
@@ -44,6 +48,15 @@ pie_chart = table(buildings$green_rating, buildings$class)
 pie(pie_chart[2,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Green Buildings")
 pie(pie_chart[1,], labels = c('Class A', 'Class B', 'Class C'), col=c('azure3','azure2','azure1'), main="Non-green Buildings", init.angle  = 90)
 ```
+
+```{r median_Class}
+par(mfrow=c(1,2))
+barplot(table(buildings$class[buildings$Rent==median(green_buildings$Rent)&buildings$green_rating==1])/nrow(green_median),names=c('classA','classB'))
+title('Class:Median-Price Green Buildings',cex.main=0.9)
+barplot(table(buildings$class[buildings$Rent==median(non_green_buildings$Rent)&buildings$green_rating==0])/nrow(nongreen_median),names=c('classA','classB','classC'))
+title('Class:Median-Price Non-Green Buildings',cex.main=0.9)
+```
+
 ```{r confounding}
 green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
 non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
