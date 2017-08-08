@@ -1,0 +1,161 @@
+---
+title: "market segmentation"
+author: "Yue"
+date: "8/8/2017"
+output: html_document
+---
+
+```{r }
+#have a brief idea of the data
+setwd("~/Desktop/summer 2017/predictive modelling/second half/STA380-master/data")
+mkt = read.csv("social_marketing.csv")
+summary(mkt)
+dim(mkt)
+colSums(mkt[2:37])
+```
+
+```{r}
+#change the first column into index
+mkt2 = mkt[,-1]
+rownames(mkt2) <- mkt[,1]
+```
+
+```{r}
+#drop some categories that are not meaningful
+drops <- c("chatter", "uncategorized", "spam", "adult")
+mkt3 = mkt2[ , !(names(mkt2) %in% drops)]
+sum = colSums(mkt3)
+sum
+sum2 = sort(sum, decreasing = TRUE)
+sum2
+```
+
+```{r}
+#scale the data
+mkt_scaled <- scale(mkt3, center=TRUE, scale=TRUE) 
+```
+
+```{r}
+#before using k-means, lets find the best k using elbow function
+wss <- (nrow(mkt_scaled)-1)*sum(apply(mkt_scaled,2,var))
+for (i in 2:15) wss[i] <- sum(kmeans(mkt_scaled, centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters", ylab="Within groups sum of squares")
+```
+
+```{r}
+#use 10 clusters
+cluster_all <- kmeans(mkt_scaled, centers=10, nstart=50)
+```
+
+```{r}
+#add cluster to original data
+mkt3$cluster <- as.numeric(cluster_all$cluster)
+```
+
+```{r}
+#Frequency of each cluster
+table(mkt3$cluster)
+```
+
+```{r}
+#creating individual datasets for analysis 
+#drop the four useless categories
+social_group1 = mkt[mkt3$cluster==1,c(2:37)]
+social_group1 = social_group1[ , !(names(social_group1) %in% drops)]
+
+social_group2 = mkt[mkt3$cluster==2,c(2:37)]
+social_group2 = social_group2[ , !(names(social_group2) %in% drops)]
+
+social_group3 = mkt[mkt3$cluster==3,c(2:37)]
+social_group3 = social_group3[ , !(names(social_group3) %in% drops)]
+
+social_group4 = mkt[mkt3$cluster==4,c(2:37)]
+social_group4 = social_group4[ , !(names(social_group4) %in% drops)]
+
+social_group5 = mkt[mkt3$cluster==5,c(2:37)]
+social_group5 = social_group5[ , !(names(social_group5) %in% drops)]
+
+social_group6 = mkt[mkt3$cluster==6,c(2:37)]
+social_group6 = social_group6[ , !(names(social_group6) %in% drops)]
+
+social_group7 = mkt[mkt3$cluster==7,c(2:37)]
+social_group7 = social_group7[ , !(names(social_group7) %in% drops)]
+
+social_group8 = mkt[mkt3$cluster==8,c(2:37)]
+social_group8 = social_group8[ , !(names(social_group8) %in% drops)]
+
+social_group9 = mkt[mkt3$cluster==9,c(2:37)]
+social_group9 = social_group9[ , !(names(social_group9) %in% drops)]
+
+social_group10 = mkt[mkt3$cluster==10,c(2:37)]
+social_group10 = social_group10[ , !(names(social_group10) %in% drops)]
+
+```
+
+```{r}
+#plot each group
+library(ggplot2)
+qplot(x=names(social_group1), y=apply(social_group1, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: politics, travel, computers
+segment: high-educated people who like high technology
+
+```{r}
+qplot(x=names(social_group2), y=apply(social_group2, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: sports_fandom, religion, food, parenting
+market segment: parents who like sports???
+
+```{r}
+qplot(x=names(social_group3), y=apply(social_group3, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: photo_sharing, shopping, current-events
+market segmentation: young ladies who like fashion, catch up the trend
+
+
+```{r}
+qplot(x=names(social_group4), y=apply(social_group4, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: news, politics, automotive
+market segment: mature male
+
+
+```{r}
+qplot(x=names(social_group5), y=apply(social_group5, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: cooking, fashion, photo_sharing, beauty
+market segment: young ladies, esp young mom
+
+
+```{r}
+qplot(x=names(social_group6), y=apply(social_group6, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: dating, photo sharing
+market segment: young people
+
+```{r}
+qplot(x=names(social_group7), y=apply(social_group7, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: college_uni, online_gaming
+market segmentation: college students who like gaming
+
+```{r}
+qplot(x=names(social_group8), y=apply(social_group8, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: tv_film, art, college_uni
+market segment: people who like arts
+
+```{r}
+qplot(x=names(social_group9), y=apply(social_group9, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: health_nutrition, personal_fitness, cooking
+market segment: people who care fitness
+
+```{r}
+qplot(x=names(social_group10), y=apply(social_group10, MARGIN=2, FUN=mean), xlab='Category',ylab='Average occurences') + geom_bar(stat = 'identity', fill = "firebrick2", color = "firebrick4")+ theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+groups: photo_sharing, current_events, health_nutrition, travel
+market segment: 
+
+Overall, the target should be young people, well-educated people, who cares social, fashion, fitness, current events. 
+
