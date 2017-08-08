@@ -169,6 +169,8 @@
     #use 10 clusters
     cluster_all <- kmeans(mkt_scaled, centers=10, nstart=50)
 
+    ## Warning: did not converge in 10 iterations
+
     #add cluster to original data
     mkt3$cluster <- as.numeric(cluster_all$cluster)
 
@@ -177,7 +179,7 @@
 
     ## 
     ##    1    2    3    4    5    6    7    8    9   10 
-    ##  480  909  780  665  203  358  403  352  423 3309
+    ## 3309  665  780  203  423  909  403  480  358  352
 
     #creating individual datasets for analysis 
     #drop the four useless categories
