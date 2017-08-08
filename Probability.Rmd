@@ -2,38 +2,9 @@
 title: "HW_EDA_0"
 author: "Suyi TU"
 date: "2017/8/7"
-output: html_document
+output: md_document
 ---
 
-$$\large{Part\,A} \\$$
+## Part A
 
-$$Since\,P(RC)+P(TC) = 1, we\,have: $$
-$$ P(Yes) = P(Yes|RC)*P(RC) + P(Yes|TC)*P(TC) $$
-$$subsitute \,numbers\,into\,the\,equation\,,we\,have: $$
-$$ 0.65 = 0.5*0.5 + P(Yes|TC)*0.7 $$
-$$\therefore\, P(Yes|TC) = \frac{5}{7} $$
-$$ Therefore,\, \frac{5}{7}\, of\, Truth\, Clickers\, answered\, Yes. \\\\$$
-
-$$\large{Part\,B} \\$$
-$$Since\, P(disease) + P(no disease) = 1, we\, have:$$
-$$\begin{array}
-{l}
-P(positive) &=& P(positive|disease) * P(disease) + P(positive|no disease) * P(no disease) \\ 
-            &=& 0.993 * 0.000025 + 0.0001 * 0.999975 \\
-            &=& 0.0001248225
-\end{array}
-$$
-$$ According\, to\, the\, Bayes\, rules\,, we\, have: $$
-$$ \begin {array}
-{l}
-P(disease|positive) &=& \frac{P(disease,positive)}{P(positive)} \\
-                    &=& \frac{P(positive|disease)*P(disease)}{P(positive)} \\
-                    &=& \frac{0.993*0.000025}{0.0001248225} \\
-                    &=& 0.1988824
-\end{array}
-$$
-$$\therefore \,Suppose\,someone\,tests\,positive,\, there\, is\,a\,19.89\%\,chance\,that\,they\,have\,the\,disease. $$
-$$Since\, P(disease|positive)\,is\,realatively\,low\,,\,a\,universal\,test\,for\,the\,disease\,may\,cause\,unnecessary\,concerns.$$
-
-
-
+> I began

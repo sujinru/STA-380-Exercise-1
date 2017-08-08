@@ -4,6 +4,7 @@ author: "Jinru Su"
 date: "8/5/2017"
 output: md_document
 ---
+
 ```{r setup, include = FALSE}
 library(dplyr)
 buildings = read.csv('~/Downloads/greenbuildings.csv')
