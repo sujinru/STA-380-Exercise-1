@@ -1,4 +1,5 @@
-# Part A
+# Probability
+## Part A
 We know <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>P(RC)+P(TC)=1</i><br/>
 
@@ -11,7 +12,7 @@ Then we have:<br/>
 Therefore:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>P(Yes|TC)=71.4%</i><br/>
 
-# PartB
+## PartB
 Since <i>P(disease) + P(nodisease)=1 </i><br/>
 
 <i>P(positive)=P(positive|disease)∗P(disease)+P(positive|nodisease)∗P(nodisease)<br/>
