@@ -2,8 +2,7 @@
 title: "Bootstrapping"
 author: "Korawat Tanwisuth"
 date: "August 3, 2017"
-output:
-    md_document
+output: md_document
  
 ---
 

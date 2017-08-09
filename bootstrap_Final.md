@@ -45,13 +45,13 @@
 
     pander(asset_return)
 
-<table style="width:76%;">
+<table style="width:83%;">
 <colgroup>
-<col width="15%" />
-<col width="15%" />
-<col width="15%" />
-<col width="15%" />
-<col width="15%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
+<col width="16%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -239,13 +239,13 @@ However, on average, they will receive around 491.
 
     pander(quantile(profit_split))
 
-<table style="width:43%;">
+<table style="width:54%;">
 <colgroup>
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
 <col width="9%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -316,13 +316,13 @@ However, on average, they will receive around 261.
 
     pander(quantile(profit_safe))
 
-<table style="width:42%;">
+<table style="width:50%;">
 <colgroup>
+<col width="11%" />
+<col width="11%" />
 <col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
+<col width="9%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -393,13 +393,13 @@ However, on average, they will receive around 724.
 
     pander(quantile(profit_aggressive))
 
-<table style="width:43%;">
+<table style="width:54%;">
 <colgroup>
+<col width="12%" />
+<col width="11%" />
+<col width="11%" />
 <col width="9%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
+<col width="9%" />
 </colgroup>
 <thead>
 <tr class="header">
