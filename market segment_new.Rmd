@@ -12,6 +12,7 @@ output: html_document
 mkt = read.csv("social_marketing.csv")
 dim(mkt)
 set.seed(123)
+library(ggplot2)
 ```
 
 ```{r}
