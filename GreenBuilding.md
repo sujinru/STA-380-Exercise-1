@@ -122,16 +122,18 @@ the first 50 years. And for the occupancy rate:
 
     hist(green_buildings_con$leasing_rate, breaks = 50, xlim=c(50, 100), ylab='', main='Leasing Rate for Green Buildings', xlab='')
 
-![](GreenBuilding_files/figure-markdown_strict/o_rate-1.png) The leasing
-rate for green buildings is highly left-skewed, so the median is a
-better estitamation for our building, which is 92.9%. Besides revenue,
-the cost for green buildings could potentially be higher than non-green
-ones. Without enough information to quantify that, we assume that the
-extra cost is about 5% of total revenue. The median of green buildings'
-rent is $30, which makes the cost $1.5.
+![](GreenBuilding_files/figure-markdown_strict/o_rate-1.png)
+
+The leasing rate for green buildings is highly left-skewed, so the
+median is a better estitamation for our building, which is 92.9%.
+Besides revenue, the cost for green buildings could potentially be
+higher than non-green ones. Without enough information to quantify that,
+we assume that the extra cost is about 5% of total revenue. The median
+of green buildings' rent is $30, which makes the cost $1.5.
 
 Therefore, the annual extra revenue from green rating is ($2.2-$1.5) ×
 92.9% × 250,000 (size) = $162,757 and it needs $5,000,000 / $162,757 =
 30 years to recuperate the extra cost. 30 years as the payback period of
-an investment is too long and makes the company exposed to risks. We
-would suggest not building the green building.
+an investment is too long and makes the company exposed to industry
+fluctuations and external risks. We would suggest not building the green
+building.
