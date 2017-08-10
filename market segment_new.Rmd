@@ -11,6 +11,7 @@ output: html_document
 #have a brief idea of the data
 mkt = read.csv("social_marketing.csv")
 dim(mkt)
+set.seed(123)
 ```
 
 ```{r}
@@ -235,8 +236,8 @@ mean_social_group3_6cluster$frequency <- as.numeric(as.character(mean_social_gro
 ggplot(mean_social_group3_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-> category: photo_sharing, current_events, shopping
-> market segmentation: female who like fashion
+> category: health_nutrition, personal_fitness, cooking, outdoors, photo_sharing
+> market segmentation: people who cares fitness
 
 ```{r}
 #plot each group: group 4
@@ -253,8 +254,8 @@ mean_social_group4_6cluster$frequency <- as.numeric(as.character(mean_social_gro
 ggplot(mean_social_group4_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-> category: cooking, photo_sharing, fashion, beauty
-> market segmentation: young ladies
+> category: politics, travel, news
+> market segmentation: well-educated people, especailly male
 
 ```{r}
 #plot each group: group 5
@@ -271,8 +272,8 @@ mean_social_group5_6cluster$frequency <- as.numeric(as.character(mean_social_gro
 ggplot(mean_social_group5_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-> category: health_nutrition, personal_fitness, cooking, outdoors, photo_sharing
-> market segmentation: people who cares fitness
+> category: cooking, photo_sharing, fashion, beauty
+> market segmentation: young ladies
 
 ```{r}
 #plot each group: group 6
@@ -289,9 +290,8 @@ mean_social_group6_6cluster$frequency <- as.numeric(as.character(mean_social_gro
 ggplot(mean_social_group6_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
 ```
 
-> category: politics, travel, news
-> market segmentation: well-educated people, especailly male
-
+> category: photo_sharing, current_events, shopping
+> market segmentation: female who like fashion
 
 # In conclusion, 
 
