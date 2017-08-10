@@ -43,7 +43,7 @@ error_vec <- rep(0,20)
 ch_index <- rep(0,20)
 # clusplot(social, social_cluster$cluster, color = T, shade = T, labels = 0, lines = 0)
 for(k in 1:20) {
-    social_cluster <- kmeans(social, k, nstart = 25)
+    social_cluster <- kmeans(mkt_scaled, k, nstart = 25)
     error_vec[k] <- social_cluster$tot.withinss
     ch_index[k] <-(sum(social_cluster$betweenss)/(k - 1))/(sum(social_cluster$withinss)/(sum(social_cluster$size)- k))
 }
@@ -58,6 +58,7 @@ When using the CH index to decide the optimal number of clusters, we need to max
 
 ```{r}
 # Use the percentage reduction method
+error_vec_shift <- c(0,error_vec)[-21]
 percent_change <- data.frame((1-(error_vec/error_vec_shift))[-1]*100)
 percent_change <- cbind(2:length(error_vec),percent_change)
 colnames(percent_change) <- c("K","Percent_Change")
