@@ -2,14 +2,14 @@
 title: "market segmentation"
 author: "Yue"
 date: "8/8/2017"
-output: html_document
+output: md_document
 ---
 # Market Segmentation
 
 # Descriptives and Initial Analysis
 ```{r }
 #have a brief idea of the data
-mkt = read.csv("social_marketing.csv")
+mkt = read.csv("~/Downloads/social_marketing.csv")
 dim(mkt)
 set.seed(123)
 library(ggplot2)
