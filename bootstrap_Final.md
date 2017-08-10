@@ -20,18 +20,20 @@
     #Find the mean and standard deviation for each asset
     asset_return <- sort(apply(myreturns, 2,mean))
     asset_risk <- sort(apply(myreturns, 2, sd))
+    asset_return_ns <- apply(myreturns, 2,mean)
+    asset_risk_ns <- apply(myreturns, 2, sd)
 
 ### Expected Return for each asset
 
     pander(asset_return)
 
-<table style="width:81%;">
+<table style="width:83%;">
 <colgroup>
 <col width="16%" />
 <col width="16%" />
 <col width="16%" />
-<col width="15%" />
-<col width="15%" />
+<col width="16%" />
+<col width="16%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -44,11 +46,11 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">5.933e-05</td>
-<td align="center">0.0001719</td>
-<td align="center">0.0002506</td>
-<td align="center">0.000264</td>
-<td align="center">0.0002802</td>
+<td align="center">5.968e-05</td>
+<td align="center">0.0001739</td>
+<td align="center">0.0002471</td>
+<td align="center">0.0002626</td>
+<td align="center">0.0002801</td>
 </tr>
 </tbody>
 </table>
@@ -79,8 +81,8 @@ on sample mean.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">0.005468</td>
-<td align="center">0.009423</td>
+<td align="center">0.005467</td>
+<td align="center">0.009422</td>
 <td align="center">0.01281</td>
 <td align="center">0.02058</td>
 <td align="center">0.02203</td>
@@ -106,14 +108,89 @@ rank will be given a score medium.
 
 **VNQ** - High return/ High risk
 
-    plot(asset_return, asset_risk, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
-    text(asset_return[1],asset_risk[1]+0.002, "LQD")
-    text(asset_return[2],asset_risk[2]+0.002, "TLT")
-    text(asset_return[3],asset_risk[3]+0.002, "EEM")
-    text(asset_return[4],asset_risk[4]+0.002, "VNQ")
-    text(asset_return[5],asset_risk[5]+0.002, "SPY")
+**Correlation between assets' returns**
 
-![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-6-1.png)
+    cor_returns <- cor(myreturns)
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4441</td>
+<td align="center">0.09985</td>
+<td align="center">0.8771</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4441</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.379</td>
+<td align="center">-0.2603</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09985</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.07149</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8771</td>
+<td align="center">-0.379</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2603</td>
+<td align="center">0.07149</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
+We will decide our not only on asset's expected return and standard
+deviation but also on its correlation with other assets. On one hand, if
+an asset has high positive correlation with another asset, that means
+they will make a riskier combination. On the other hand, if an asset has
+negative correlation with another asset, they will make a safer
+combination.
+
+    plot(asset_return_ns, asset_risk_ns, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
+    text(asset_return_ns[1],asset_risk_ns[1]+0.002, "SPY")
+    text(asset_return_ns[2],asset_risk_ns[2]+0.002, "TLT")
+    text(asset_return_ns[3],asset_risk_ns[3]+0.002, "LQD")
+    text(asset_return_ns[4],asset_risk_ns[4]+0.002, "EEM")
+    text(asset_return_ns[5],asset_risk_ns[5]+0.002, "VNQ")
+
+![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-7-1.png)
 
     #Create a function to simulate 20 trading day
     sim_stock <- function(myreturns, investment, endperiod, weights, num_sim){
@@ -188,6 +265,80 @@ medium risk asset. For the weight, we will use 1/standard deviation as
 the coefficients and normalize them to add up to 1. SPY, TLT, and LQD
 are the three chosen assets.
 
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4441</td>
+<td align="center">0.09985</td>
+<td align="center">0.8771</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4441</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.379</td>
+<td align="center">-0.2603</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09985</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.07149</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8771</td>
+<td align="center">-0.379</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2603</td>
+<td align="center">0.07149</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
+Among the asset that has low standard deviation, we chose SPY, TLT, and
+LQD in our safe strategy because SPY and TLT have -0.44 correlation
+coefficient, suggesting a negative correlation. LQD and SPY have almost
+0 correlation coefficient. Finally, LQD and TLT have about 0.4
+correlation coefficient. It might seems counterintuitive at first that
+we pick this asset. However, other combinations will include an asset
+that has high correlation with SPY. As a result, we select LQD, TLT, and
+SPY.
+
     set.seed(1)
     spy_coef <- 1/asset_risk[3]
     tlt_coef <- 1/asset_risk[2]
@@ -233,10 +384,79 @@ are the three chosen assets.
 
 ### Aggressive Strategy
 
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4441</td>
+<td align="center">0.09985</td>
+<td align="center">0.8771</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4441</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.379</td>
+<td align="center">-0.2603</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09985</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.07149</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8771</td>
+<td align="center">-0.379</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2603</td>
+<td align="center">0.07149</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
 For this strategy, we will not be as diversified as the safe strategy.
 Also, we will look mainly at assests which have high returns with
 moderate to high risks. Coefficients will be adjusted based on the
-expected return values. We will invest in SPY and VNQ
+expected return values.
+
+We chose SPY and VNQ because they both have high returns and moderate to
+high risk. They also have a positive correlation of 0.773, meaning that
+they are risky but can yield high returns.
 
     set.seed(1)
     total_coef_a <- asset_return[4] + asset_return[5]
@@ -266,11 +486,11 @@ expected return values. We will invest in SPY and VNQ
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">0.4851</td>
+<td align="center">0.4839</td>
 <td align="center">0</td>
 <td align="center">0</td>
 <td align="center">0</td>
-<td align="center">0.5149</td>
+<td align="center">0.5161</td>
 </tr>
 </tbody>
 </table>
@@ -290,7 +510,7 @@ expected return values. We will invest in SPY and VNQ
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-12-1.png)
+![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-15-1.png)
 
     var_mean_split <- c(var05_split, mean(profit_split),sd(profit_split))
     names(var_mean_split) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -311,9 +531,9 @@ expected return values. We will invest in SPY and VNQ
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-6560</td>
-<td align="center">446.1</td>
-<td align="center">4454</td>
+<td align="center">-6589</td>
+<td align="center">450.6</td>
+<td align="center">4418</td>
 </tr>
 </tbody>
 </table>
@@ -345,11 +565,11 @@ However, on average, they will receive around 491.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-13458</td>
-<td align="center">-2480</td>
-<td align="center">243.2</td>
-<td align="center">3196</td>
-<td align="center">19929</td>
+<td align="center">-16151</td>
+<td align="center">-2332</td>
+<td align="center">345.1</td>
+<td align="center">3036</td>
+<td align="center">22167</td>
 </tr>
 </tbody>
 </table>
@@ -370,7 +590,7 @@ range from a loss of 16958 to a gain of 21481.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-15-1.png)
+![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-18-1.png)
 
     var_mean_safe <- c(var05_safe, mean(profit_safe), sd(profit_safe))
     names(var_mean_safe) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -391,9 +611,9 @@ range from a loss of 16958 to a gain of 21481.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-3308</td>
-<td align="center">213.5</td>
-<td align="center">2175</td>
+<td align="center">-3332</td>
+<td align="center">281.8</td>
+<td align="center">2167</td>
 </tr>
 </tbody>
 </table>
@@ -425,11 +645,11 @@ However, on average, they will receive around 261.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-8893</td>
-<td align="center">-1147</td>
-<td align="center">254.9</td>
-<td align="center">1577</td>
-<td align="center">9976</td>
+<td align="center">-7990</td>
+<td align="center">-1042</td>
+<td align="center">304.7</td>
+<td align="center">1644</td>
+<td align="center">10935</td>
 </tr>
 </tbody>
 </table>
@@ -450,7 +670,7 @@ range from a loss of 9046 to a gain of 8677.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-18-1.png)
+![](bootstrap_Final_files/figure-markdown_strict/unnamed-chunk-21-1.png)
 
     var_mean_aggressive <- c(var05_aggressive, mean(profit_aggressive), sd(profit_aggressive))
     names(var_mean_aggressive) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -471,9 +691,9 @@ range from a loss of 9046 to a gain of 8677.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-11025</td>
-<td align="center">647.4</td>
-<td align="center">7509</td>
+<td align="center">-11182</td>
+<td align="center">611</td>
+<td align="center">7442</td>
 </tr>
 </tbody>
 </table>
@@ -486,11 +706,11 @@ However, on average, they will receive around 724.
 
     pander(quantile(profit_aggressive))
 
-<table style="width:51%;">
+<table style="width:54%;">
 <colgroup>
 <col width="12%" />
 <col width="11%" />
-<col width="8%" />
+<col width="11%" />
 <col width="9%" />
 <col width="9%" />
 </colgroup>
@@ -505,11 +725,11 @@ However, on average, they will receive around 724.
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">-24004</td>
-<td align="center">-4314</td>
-<td align="center">320</td>
-<td align="center">5020</td>
-<td align="center">36846</td>
+<td align="center">-25420</td>
+<td align="center">-4185</td>
+<td align="center">389.1</td>
+<td align="center">4977</td>
+<td align="center">37612</td>
 </tr>
 </tbody>
 </table>
@@ -541,18 +761,18 @@ range from a loss of 26063 to a gain of 37979.
 <tbody>
 <tr class="odd">
 <td align="center"><strong>Split Strategy</strong></td>
-<td align="center">-6560</td>
-<td align="center">446.1</td>
+<td align="center">-6589</td>
+<td align="center">450.6</td>
 </tr>
 <tr class="even">
 <td align="center"><strong>Safe Strategy</strong></td>
-<td align="center">-3308</td>
-<td align="center">213.5</td>
+<td align="center">-3332</td>
+<td align="center">281.8</td>
 </tr>
 <tr class="odd">
 <td align="center"><strong>Aggressive Strategy</strong></td>
-<td align="center">-11025</td>
-<td align="center">647.4</td>
+<td align="center">-11182</td>
+<td align="center">611</td>
 </tr>
 </tbody>
 </table>
@@ -571,15 +791,15 @@ range from a loss of 26063 to a gain of 37979.
 <tbody>
 <tr class="odd">
 <td align="center"><strong>Split Strategy</strong></td>
-<td align="center">4454</td>
+<td align="center">4418</td>
 </tr>
 <tr class="even">
 <td align="center"><strong>Safe Strategy</strong></td>
-<td align="center">2175</td>
+<td align="center">2167</td>
 </tr>
 <tr class="odd">
 <td align="center"><strong>Aggressive Strategy</strong></td>
-<td align="center">7509</td>
+<td align="center">7442</td>
 </tr>
 </tbody>
 </table>
