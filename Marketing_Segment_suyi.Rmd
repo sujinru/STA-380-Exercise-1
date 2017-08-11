@@ -68,7 +68,10 @@ ggplot(cate.df,mapping=aes(x=cluster,y=tfidf_scores,fill=names))+geom_bar(stat='
 names_df<-data.frame('A'=cate.df$names[cate.df$cluster=='A'],'B'=cate.df$names[cate.df$cluster=='B'],'C'=cate.df$names[cate.df$cluster=='C'])
 pander(names_df)
 ```
-> From the topics of high TFIDF-socres in the clusters, we can infer that first cluster represents people who care a lot about health, mostly likely housewives; the second cluster represents college/high school students; the third cluster represents people who care about current events, most likely working people.
-> yue: what kind of marketing strategies?
+> From the topics of high TFIDF-socres in the clusters, we can infer that first cluster represents people who care a lot about health and fitness, mostly likely to be well-educated people and housewives; the second cluster represents college/high school students; the third cluster represents people who care about current events, most likely working people.
+> Marketing strategy for each group: 
+> cluster one: We recommend the company could post some healthy cooking recipes which use company's products, and the company can cooperate with some famous chefs to promote their products, such as Gordon Ramsay. 
+> cluster two: The company should launch interesting social media campaigns to attract this market segment, such as campaigns combining simple gaming and promotions together. 
+> cluster three: The company can sponsor some social events or even make some political contributions to improce their social exposures on newspaper, TV and news website to target this group. 
 
 
