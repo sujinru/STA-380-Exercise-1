@@ -8,10 +8,7 @@ Probability
 
 ### Part A
 
-We know <br/>        <i>P(RC)+P(TC)=1</i><br/>
-
-<i>P(TC)=1-P(RC)=1-0.3=0.7</i><br/>
-<i>P(Yes|RC)=0.5</i><br/>
+We know <br/>        <i>P(RC)+P(TC)=1</i><br/> <i>P(TC)=1-P(RC)=1-0.3=0.7</i><br/> <i>P(Yes|RC)=0.5</i><br/>
 
 and<br/>       <i>P(Yes)=P(Yes|RC)∗P(RC)+P(Yes|TC)∗P(TC)</i><br/>
 
