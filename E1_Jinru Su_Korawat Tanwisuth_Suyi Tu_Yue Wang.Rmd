@@ -1,6 +1,6 @@
 ---
-title: "Excercise 1_Jinru Su_Korawat Tanwisuth_Suyi Tu_Yue Wang"
-#author: "Jinru Su_Korawat Tanwisuth_Suyi Tu_Yue Wang""
+title: "Excercise 1_STA 380"
+author: "Jinru Su_Korawat Tanwisuth_Suyi Tu_Yue Wang"
 date: "8/11/2017"
 output: md_document
 ---

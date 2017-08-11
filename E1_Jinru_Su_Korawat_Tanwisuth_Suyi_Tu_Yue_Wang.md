@@ -54,7 +54,7 @@ buildings are "weird" and should be removed from our analysis.
     hist(non_green_buildings$leasing_rate, main="Non-Green Buildings", xlab="Leasing Rate", ylab="", 
          col=c('red', rep('white',9)))
 
-![](Excercise1_final_files/figure-markdown_strict/occupancy-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/occupancy-1.png)
 
 > The median market rent in the non-green buildings was $25 per square
 > foot per year, while the median market rent in the green buildings was
@@ -77,7 +77,7 @@ than 50.
     points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
     legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Median Age Non-Green Buildings','Green buildings','Median Age Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
 
-![](Excercise1_final_files/figure-markdown_strict/con_age-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/con_age-1.png)
 
 Another confounding variable is class. As shown in charts below, class A
 buildings have a definite premium rent over other classes and green
@@ -87,7 +87,7 @@ class B. Therefore, we removed buildings in class C in our analysis.
     buildings$class = ifelse(buildings$class_a==1, 1, ifelse(buildings$class_b==1, 2, 3))
     boxplot(buildings$Rent~buildings$class,outline=FALSE,boxwex=0.5, col=c('gold2','gold2','gold2'), names = c("Class A", "Class B", "Class C"), main="Rent vs. Class")
 
-![](Excercise1_final_files/figure-markdown_strict/con_class-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/con_class-1.png)
 
     par(mfrow=c(1,2))
 
@@ -95,7 +95,7 @@ class B. Therefore, we removed buildings in class C in our analysis.
     pie(pie_chart[2,], labels = c('Class A: 80%', 'Class B: 19%', 'Class C: 1%'), col=c('deepskyblue','gold','grey'), main="Green Buildings", init.angle = 150)
     pie(pie_chart[1,], labels = c('Class A: 36%', 'Class B: 48%', 'Class C: 16%'), col=c('deepskyblue','gold','grey'), main="Non-green Buildings", init.angle  = 90)
 
-![](Excercise1_final_files/figure-markdown_strict/con_class-2.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/con_class-2.png)
 
     green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
     non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
@@ -144,7 +144,7 @@ than 50 years old and in class A or B and here is the plot:
     lines(newdata$age, predictions, type="l", col='red', lwd=2)
     legend(32, 20000, c("KNN Regression"), lwd=2.5,col="red")
 
-![](Excercise1_final_files/figure-markdown_strict/over_age-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/over_age-1.png)
 
 Each building is a gray dot in the plot. We draw a line with KNN (k set
 to 20) to show a smooth general trend of LR over age. It turns out that
@@ -154,7 +154,7 @@ the first 50 years. And for the occupancy rate:
 
     hist(green_buildings_con$leasing_rate, breaks = 50, xlim=c(50, 100), ylab='', main='Leasing Rate for Green Buildings', xlab='')
 
-![](Excercise1_final_files/figure-markdown_strict/o_rate-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/o_rate-1.png)
 
 The leasing rate for green buildings is highly left-skewed, so the
 median is a better estitamation for our building, which is 92.9%.
@@ -282,7 +282,7 @@ rank will be given a score medium.
     text(asset_return[4],asset_risk[4]+0.002, "VNQ")
     text(asset_return[5],asset_risk[5]+0.002, "SPY")
 
-![](Excercise1_final_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/unnamed-chunk-5-1.png)
 
     #Create a function to simulate 20 trading day
     sim_stock <- function(myreturns, investment, endperiod, weights, num_sim){
@@ -459,7 +459,7 @@ expected return values. We will invest in SPY and VNQ
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](Excercise1_final_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/unnamed-chunk-11-1.png)
 
     var_mean_split <- c(var05_split, mean(profit_split),sd(profit_split))
     names(var_mean_split) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -539,7 +539,7 @@ range from a loss of 16958 to a gain of 21481.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](Excercise1_final_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
     var_mean_safe <- c(var05_safe, mean(profit_safe), sd(profit_safe))
     names(var_mean_safe) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -619,7 +619,7 @@ range from a loss of 9046 to a gain of 8677.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](Excercise1_final_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
     var_mean_aggressive <- c(var05_aggressive, mean(profit_aggressive), sd(profit_aggressive))
     names(var_mean_aggressive) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -816,7 +816,7 @@ final parameter since its output makes more sense to us.
 
     ggplot(cate.df,mapping=aes(x=cluster,y=tfidf_scores,fill=names))+geom_bar(stat='identity',position='dodge')+theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+scale_fill_manual(values=getPalette(colourCount))+theme_bw()
 
-![](Excercise1_final_files/figure-markdown_strict/unnamed-chunk-24-1.png)
+![](E1_Jinru_Su_Korawat_Tanwisuth_Suyi_Tu_Yue_Wang_files/figure-markdown_strict/unnamed-chunk-24-1.png)
 
     names_df<-data.frame('A'=cate.df$names[cate.df$cluster=='A'],'B'=cate.df$names[cate.df$cluster=='B'],'C'=cate.df$names[cate.df$cluster=='C'])
     pander(names_df)
