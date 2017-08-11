@@ -197,8 +197,17 @@ mean_social_group1_6cluster = data.frame(cbind(names(mean_social_group1_6cluster
 colnames(mean_social_group1_6cluster) <- c("category", "frequency")
 mean_social_group1_6cluster$frequency <- as.numeric(as.character(mean_social_group1_6cluster$frequency))
 
+ct=cluster_all_6cluster$centers[1,]
+ct_df=data.frame(names=names(ct),ct=unname(ct))
+
 # plot
-ggplot(mean_social_group1_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
+  ggplot(ct_df, aes(x=reorder(names,ct),y=ct)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
+```
+
+```{r}
+ ggplot(mean_social_group1_6cluster, aes(x=reorder(category,frequency),y=frequency)) + geom_bar(stat = 'identity', fill = "salmon", color ="white")+ coord_flip() + theme(axis.text.x = element_text(angle=90, hjust=1))
+
+
 ```
 
 > category: college_uni, online_gaming
