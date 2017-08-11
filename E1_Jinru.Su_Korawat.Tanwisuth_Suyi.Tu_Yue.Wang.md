@@ -10,6 +10,9 @@ Probability
 
 We know <br/>        <i>P(RC)+P(TC)=1</i><br/>
 
+<i>P(TC)=1-P(RC)=1-0.3=0.7</i><br/>
+<i>P(Yes|RC)=0.5</i><br/>
+
 and<br/>       <i>P(Yes)=P(Yes|RC)∗P(RC)+P(Yes|TC)∗P(TC)</i><br/>
 
 Then we have:<br/>       <i>0.65=0.5∗0.3+P(Yes|TC)∗0.7</i><br/>
