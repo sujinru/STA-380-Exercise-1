@@ -4,8 +4,11 @@ author: "Jinru Su_Korawat Tanwisuth_Suyi Tu_Yue Wang"
 date: "8/11/2017"
 output: md_document
 ---
-# Probability
-## Part A
+# Excercise 1 STA 380
+<i>Author: Jinru Su, Korawat Tanwisuth, Suyi Tu, Yue Wang</i>
+
+## Probability
+### Part A
 We know <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>P(RC)+P(TC)=1</i><br/>
 
@@ -18,7 +21,7 @@ Then we have:<br/>
 Therefore:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>P(Yes|TC)=71.4%</i><br/>
 
-## PartB
+### PartB
 Since <i>P(disease) + P(nodisease)=1 </i><br/>
 
 <i>P(positive)=P(positive|disease)∗P(disease)+P(positive|nodisease)∗P(nodisease)<br/>
@@ -54,7 +57,7 @@ green_buildings = subset(buildings, green_rating==1)
 non_green_buildings = subset(buildings, green_rating!=1)
 ```
 
-# Green Building
+## Green Building
 
 > I began by cleaning the data a little bit. In particular, I noticed that a handful of the buildings in the data set had very low occupancy rates (less than 10% of available space occupied). I decided to remove these buildings from consideration, on the theory that these buildings might have something weird going on with them, and could potentially distort the analysis.
 
@@ -139,7 +142,7 @@ The leasing rate for green buildings is highly left-skewed, so the median is a b
 
 Therefore, the annual extra revenue from green rating is ($2.2-$1.5) $\times$ 92.9% $\times$ 250,000 (size) = $162,757 and it needs $5,000,000 /  $162,757 = 30 years to recuperate the extra cost. 30 years as the payback period of an investment is too long and makes the company exposed to industry fluctuations and external risks. We would suggest not building the green building.
 
-# Bootstrapping
+## Bootstrapping
 ```{r, message=FALSE, warning=FALSE}
 mystocks <- c("SPY", "TLT", "LQD", "EEM", "VNQ")
 getSymbols(mystocks)
@@ -382,7 +385,7 @@ colnames(final_table) <- c("Value at Risk at 5%", "Expected Return", "Standard D
 pander(final_table)
 ```
 
-# Market Segmentation
+## Market Segmentation
 
 We delete the following four categories in order to make our market segmentation more meaningful, spam, adult, uncategorize, and chatter. Since adult and spam are categories that are supposed to be filtered and contain improper contents, and uncategorize and chatter have no special meanings. Therefore, we delete these four columns. 
 
