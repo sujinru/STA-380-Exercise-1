@@ -16,7 +16,7 @@ library(RColorBrewer)
 social_market <- read.csv('~/Documents/SourceTree/STA380/data/social_marketing.csv')
 ```
 
-> yue: Why do you discard these columns?
+> We delete the following four categories in order to make our market segmentation more meaningful, spam, adult, uncategorize, and chatter. Since adult and spam are categories that are supposed to be filtered and contain improper contents, and uncategorize and chatter have no special meanings. Therefore, we delete these four columns. 
 
 ```{r}
 discard<-c('spam','adult','uncategorize','chatter')
