@@ -192,8 +192,10 @@ Bootstrapping
     #Find the mean and standard deviation for each asset
     asset_return <- sort(apply(myreturns, 2,mean))
     asset_risk <- sort(apply(myreturns, 2, sd))
+    asset_return_ns <- apply(myreturns, 2,mean)
+    asset_risk_ns <- apply(myreturns, 2, sd)
 
-### Expected Return for each asset
+### Expected Return of each asset
 
     pander(asset_return)
 
@@ -278,14 +280,89 @@ rank will be given a score medium.
 
 **VNQ** - High return/ High risk
 
-    plot(asset_return, asset_risk, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
-    text(asset_return[1],asset_risk[1]+0.002, "LQD")
-    text(asset_return[2],asset_risk[2]+0.002, "TLT")
-    text(asset_return[3],asset_risk[3]+0.002, "EEM")
-    text(asset_return[4],asset_risk[4]+0.002, "VNQ")
-    text(asset_return[5],asset_risk[5]+0.002, "SPY")
+**Correlation between assets' returns**
 
-![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-5-1.png)
+    cor_returns <- cor(myreturns)
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4443</td>
+<td align="center">0.09986</td>
+<td align="center">0.8772</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4443</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.3792</td>
+<td align="center">-0.2604</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09986</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.0715</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8772</td>
+<td align="center">-0.3792</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2604</td>
+<td align="center">0.0715</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
+We will decide our not only on asset's expected return and standard
+deviation but also on its correlation with other assets. On one hand, if
+an asset has high positive correlation with another asset, that means
+they will make a riskier combination. On the other hand, if an asset has
+negative correlation with another asset, they will make a safer
+combination.
+
+    plot(asset_return_ns, asset_risk_ns, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
+    text(asset_return_ns[1],asset_risk_ns[1]+0.002, "SPY")
+    text(asset_return_ns[2],asset_risk_ns[2]+0.002, "TLT")
+    text(asset_return_ns[3],asset_risk_ns[3]+0.002, "LQD")
+    text(asset_return_ns[4],asset_risk_ns[4]+0.002, "EEM")
+    text(asset_return_ns[5],asset_risk_ns[5]+0.002, "VNQ")
+
+![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-6-1.png)
 
     #Create a function to simulate 20 trading day
     sim_stock <- function(myreturns, investment, endperiod, weights, num_sim){
@@ -360,6 +437,80 @@ medium risk asset. For the weight, we will use 1/standard deviation as
 the coefficients and normalize them to add up to 1. SPY, TLT, and LQD
 are the three chosen assets.
 
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4443</td>
+<td align="center">0.09986</td>
+<td align="center">0.8772</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4443</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.3792</td>
+<td align="center">-0.2604</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09986</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.0715</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8772</td>
+<td align="center">-0.3792</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2604</td>
+<td align="center">0.0715</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
+Among the asset that has low standard deviation, we chose SPY, TLT, and
+LQD in our safe strategy because SPY and TLT have -0.44 correlation
+coefficient, suggesting a negative correlation. LQD and SPY have almost
+0 correlation coefficient. Finally, LQD and TLT have about 0.4
+correlation coefficient. It might seems counterintuitive at first that
+we pick this asset. However, other combinations will include an asset
+that has high correlation with SPY. As a result, we select LQD, TLT, and
+SPY.
+
     set.seed(1)
     spy_coef <- 1/asset_risk[3]
     tlt_coef <- 1/asset_risk[2]
@@ -405,10 +556,79 @@ are the three chosen assets.
 
 ### Aggressive Strategy
 
+    pander(cor_returns)
+
+<table style="width:97%;">
+<colgroup>
+<col width="20%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">ClCl.SPY</th>
+<th align="center">ClCl.TLT</th>
+<th align="center">ClCl.LQD</th>
+<th align="center">ClCl.EEM</th>
+<th align="center">ClCl.VNQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>ClCl.SPY</strong></td>
+<td align="center">1</td>
+<td align="center">-0.4443</td>
+<td align="center">0.09986</td>
+<td align="center">0.8772</td>
+<td align="center">0.773</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.TLT</strong></td>
+<td align="center">-0.4443</td>
+<td align="center">1</td>
+<td align="center">0.4248</td>
+<td align="center">-0.3792</td>
+<td align="center">-0.2604</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.LQD</strong></td>
+<td align="center">0.09986</td>
+<td align="center">0.4248</td>
+<td align="center">1</td>
+<td align="center">0.1198</td>
+<td align="center">0.0715</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>ClCl.EEM</strong></td>
+<td align="center">0.8772</td>
+<td align="center">-0.3792</td>
+<td align="center">0.1198</td>
+<td align="center">1</td>
+<td align="center">0.6966</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ClCl.VNQ</strong></td>
+<td align="center">0.773</td>
+<td align="center">-0.2604</td>
+<td align="center">0.0715</td>
+<td align="center">0.6966</td>
+<td align="center">1</td>
+</tr>
+</tbody>
+</table>
+
 For this strategy, we will not be as diversified as the safe strategy.
 Also, we will look mainly at assests which have high returns with
 moderate to high risks. Coefficients will be adjusted based on the
-expected return values. We will invest in SPY and VNQ
+expected return values.
+
+We chose SPY and VNQ because they both have high returns and moderate to
+high risk. They also have a positive correlation of 0.773, meaning that
+they are risky but can yield high returns.
 
     set.seed(1)
     total_coef_a <- asset_return[4] + asset_return[5]
@@ -462,7 +682,7 @@ expected return values. We will invest in SPY and VNQ
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-11-1.png)
+![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-14-1.png)
 
     var_mean_split <- c(var05_split, mean(profit_split),sd(profit_split))
     names(var_mean_split) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -542,7 +762,7 @@ range from a loss of 16958 to a gain of 21481.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-14-1.png)
+![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-17-1.png)
 
     var_mean_safe <- c(var05_safe, mean(profit_safe), sd(profit_safe))
     names(var_mean_safe) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -622,7 +842,7 @@ range from a loss of 9046 to a gain of 8677.
            col=c("firebrick","cyan4"), 
            bty = "n")
 
-![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-17-1.png)
+![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-20-1.png)
 
     var_mean_aggressive <- c(var05_aggressive, mean(profit_aggressive), sd(profit_aggressive))
     names(var_mean_aggressive) <- c("Value at Risk at 5%", "Expected Return", "Standard Deviation of Return")
@@ -819,7 +1039,7 @@ final parameter since its output makes more sense to us.
 
     ggplot(cate.df,mapping=aes(x=cluster,y=tfidf_scores,fill=names))+geom_bar(stat='identity',position='dodge')+theme(panel.grid.minor=element_blank(),panel.grid.major=element_blank())+scale_fill_manual(values=getPalette(colourCount))+theme_bw()
 
-![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-24-1.png)
+![](E1_Jinru.Su_Korawat.Tanwisuth_Suyi.Tu_Yue.Wang_files/figure-markdown_strict/unnamed-chunk-27-1.png)
 
     names_df<-data.frame('A'=cate.df$names[cate.df$cluster=='A'],'B'=cate.df$names[cate.df$cluster=='B'],'C'=cate.df$names[cate.df$cluster=='C'])
     pander(names_df)

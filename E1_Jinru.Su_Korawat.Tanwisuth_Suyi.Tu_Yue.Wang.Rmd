@@ -160,10 +160,12 @@ myreturns <- as.matrix(na.omit(myreturns))
 #Find the mean and standard deviation for each asset
 asset_return <- sort(apply(myreturns, 2,mean))
 asset_risk <- sort(apply(myreturns, 2, sd))
+asset_return_ns <- apply(myreturns, 2,mean)
+asset_risk_ns <- apply(myreturns, 2, sd)
 ```
 
 
-### Expected Return for each asset 
+### Expected Return of each asset 
 ```{r}
 pander(asset_return)
 ```
@@ -189,13 +191,21 @@ From the above tables, we can classify our assets into different categories. Any
 
 **VNQ** - High return/ High risk
 
+**Correlation between assets' returns**
 ```{r}
-plot(asset_return, asset_risk, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
-text(asset_return[1],asset_risk[1]+0.002, "LQD")
-text(asset_return[2],asset_risk[2]+0.002, "TLT")
-text(asset_return[3],asset_risk[3]+0.002, "EEM")
-text(asset_return[4],asset_risk[4]+0.002, "VNQ")
-text(asset_return[5],asset_risk[5]+0.002, "SPY")
+cor_returns <- cor(myreturns)
+pander(cor_returns)
+```
+
+We will decide our not only on asset's expected return and standard deviation but also on its correlation with other assets. On one hand, if an asset has high positive correlation with another asset, that means they will make a riskier combination. On the other hand, if an asset has negative correlation with another asset, they will make a safer combination.
+
+```{r}
+plot(asset_return_ns, asset_risk_ns, pch = 19, cex = 3.5, col = "salmon", xlab = "Expected Return", ylab = "Risk(Standard Devation)",ylim = c(0,0.025), main = "Risk vs Return")
+text(asset_return_ns[1],asset_risk_ns[1]+0.002, "SPY")
+text(asset_return_ns[2],asset_risk_ns[2]+0.002, "TLT")
+text(asset_return_ns[3],asset_risk_ns[3]+0.002, "LQD")
+text(asset_return_ns[4],asset_risk_ns[4]+0.002, "EEM")
+text(asset_return_ns[5],asset_risk_ns[5]+0.002, "VNQ")
 ```
 
 
@@ -245,6 +255,13 @@ pander(weights)
 ### Safe Strategy
 
 For this strategy, we will look at our classification of the five assets and choose those with low risk properties. We will also include one medium risk asset. For the weight, we will use 1/standard deviation as the coefficients and normalize them to add up to 1. SPY, TLT, and LQD are the three chosen assets. 
+
+```{r}
+pander(cor_returns)
+```
+
+Among the asset that has low standard deviation, we chose SPY, TLT, and LQD in our safe strategy because SPY and TLT have -0.44 correlation coefficient, suggesting a negative correlation. LQD and SPY have almost 0 correlation coefficient. Finally, LQD and TLT have about 0.4 correlation coefficient. It might seems counterintuitive at first that we pick this asset. However, other combinations will include an asset that has high correlation with SPY. As a result, we select LQD, TLT, and SPY.
+
 ```{r}
 set.seed(1)
 spy_coef <- 1/asset_risk[3]
@@ -263,7 +280,13 @@ pander(weights)
 
 ### Aggressive Strategy
 
-For this strategy, we will not be as diversified as the safe strategy. Also, we will look mainly at assests which have high returns with moderate to high risks. Coefficients will be adjusted based on the expected return values. We will invest in SPY and VNQ
+```{r}
+pander(cor_returns)
+```
+
+For this strategy, we will not be as diversified as the safe strategy. Also, we will look mainly at assests which have high returns with moderate to high risks. Coefficients will be adjusted based on the expected return values. 
+
+We chose SPY and VNQ because they both have high returns and moderate to high risk. They also have a positive correlation of 0.773, meaning that they are risky but can yield high returns. 
 
 ```{r}
 set.seed(1)
