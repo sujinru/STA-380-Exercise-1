@@ -870,12 +870,13 @@ cluster represents college/high school students; the third cluster
 represents people who care about current events, most likely working
 people.
 
-Marketing strategy for each group: <br/> cluster one: We recommend the
-company could post some healthy cooking recipes which use company's
-products, and the company can cooperate with some famous chefs to
-promote their products, such as Gordon Ramsay. <br/> cluster two: The
-company should launch interesting social media campaigns to attract this
-market segment, such as campaigns combining simple gaming and promotions
-together. <br/> cluster three: The company can sponsor some social
-events or even make some political contributions to improce their social
-exposures on newspaper, TV and news website to target this group.
+Marketing strategy for each group: <br/> <b>Cluster one</b>: We
+recommend the company could post some healthy cooking recipes which use
+company's products, and the company can cooperate with some famous chefs
+to promote their products, such as Gordon Ramsay. <br/> <b>Cluster
+two</b>: The company should launch interesting social media campaigns to
+attract this market segment, such as campaigns combining simple gaming
+and promotions together. <br/> <b>Cluster three</b>: The company can
+sponsor some social events or even make some political contributions to
+improce their social exposures on newspaper, TV and news website to
+target this group.
