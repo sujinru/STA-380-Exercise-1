@@ -1,0 +1,174 @@
+Probability
+===========
+
+Part A
+------
+
+We know <br/>        <i>P(RC)+P(TC)=1</i><br/>
+
+and<br/>       <i>P(Yes)=P(Yes|RC)∗P(RC)+P(Yes|TC)∗P(TC)</i><br/>
+
+Then we have:<br/>       <i>0.65=0.5∗0.3+P(Yes|TC)∗0.7</i><br/>
+
+Therefore:<br/>       <i>P(Yes|TC)=71.4%</i><br/>
+
+PartB
+-----
+
+Since <i>P(disease) + P(nodisease)=1 </i><br/>
+
+<i>P(positive)=P(positive|disease)∗P(disease)+P(positive|nodisease)∗P(nodisease)<br/>
+                  =0.993∗0.000025+0.0001∗0.999975<br/>
+                  =0.0001248225</i>
+
+According to Bayes Rules<br/> <i>
+P(disease|positive)=P(disease,positive)/P(positive)<br/>
+                               =P(positive|disease)∗P(disease)/P(positive)<br/>
+                               =0.993∗0.0000250/0001248225<br/>
+                               =0.1988824</i>
+
+Given a positive test result, there is a 19.89% chance that they have
+the disease.
+
+Since P(disease|positive) is low, a universal test for the disease may
+cause unnecessary concerns.
+
+Green Building
+==============
+
+> I began by cleaning the data a little bit. In particular, I noticed
+> that a handful of the buildings in the data set had very low occupancy
+> rates (less than 10% of available space occupied). I decided to remove
+> these buildings from consideration, on the theory that these buildings
+> might have something weird going on with them, and could potentially
+> distort the analysis.
+
+Is this data cleaning step necessary? We looked into the distribution of
+leasing rate of green buildings and non-green buildings. Interestingly,
+the distribution of non-green buildings' leasing rate has a shoot up in
+the range below 10%. Therefore, we hold the same belief that these
+buildings are "weird" and should be removed from our analysis.
+
+    par(mfrow=c(1,2))
+    hist(green_buildings$leasing_rate, main="Green Buildings", xlab="Leasing Rate", ylab = "")
+    hist(non_green_buildings$leasing_rate, main="Non-Green Buildings", xlab="Leasing Rate", ylab="", 
+         col=c('red', rep('white',9)))
+
+![](Excercise1_final_files/figure-markdown_strict/occupancy-1.png)
+
+> The median market rent in the non-green buildings was $25 per square
+> foot per year, while the median market rent in the green buildings was
+> $27.60 per square foot per year: about $2.60 more per square foot.
+
+The way the author calculates the premium rent for green buildings is
+too generic as there are confounding variables. It is important to
+control the confounding variables in our analysis so that we can see how
+the green rating influences the rent. Age is one of the confounding
+variables. As shown in the plot, green buildings are highly concentrated
+in the lower range of age, which means they are relatively new, thus
+having higher rent. We decided to analyze the buildings with ages less
+than 50.
+
+    green_median = green_buildings[green_buildings$Rent == median(green_buildings$Rent),]
+    nongreen_median = non_green_buildings[non_green_buildings$Rent == median(non_green_buildings$Rent),]
+    plot(non_green_buildings$age, non_green_buildings$Rent, col="grey", pch=19, cex=0.5, xlab = "Buildings Age", ylab="Annual Rent") 
+    abline(v=median(nongreen_median$age),col='grey',lwd=2)
+    abline(v=median(green_median$age),col='red',lwd=2)
+    points(green_buildings$age, green_buildings$Rent, col="red", pch=19, cex=0.5)
+    legend(x=100,y=250,cex=0.7,legend=c('Non-Green buildings','Median Age Non-Green Buildings','Green buildings','Median Age Green Buildings'),lty=c(NA,1,NA,1),pch=c(19,NA,19,NA),col=c('grey','grey','red','red'))
+
+![](Excercise1_final_files/figure-markdown_strict/con_age-1.png)
+
+Another confounding variable is class. As shown in charts below, class A
+buildings have a definite premium rent over other classes and green
+buildings have an enormously high percentage falling into class A and
+class B. Therefore, we removed buildings in class C in our analysis.
+
+    buildings$class = ifelse(buildings$class_a==1, 1, ifelse(buildings$class_b==1, 2, 3))
+    boxplot(buildings$Rent~buildings$class,outline=FALSE,boxwex=0.5, col=c('gold2','gold2','gold2'), names = c("Class A", "Class B", "Class C"), main="Rent vs. Class")
+
+    library(ggplot2)
+
+![](Excercise1_final_files/figure-markdown_strict/con_class-1.png)
+
+    par(mfrow=c(1,2))
+
+    pie_chart = table(buildings$green_rating, buildings$class)
+    pie(pie_chart[2,], labels = c('Class A: 80%', 'Class B: 19%', 'Class C: 1%'), col=c('deepskyblue','gold','grey'), main="Green Buildings", init.angle = 150)
+    pie(pie_chart[1,], labels = c('Class A: 36%', 'Class B: 48%', 'Class C: 16%'), col=c('deepskyblue','gold','grey'), main="Non-green Buildings", init.angle  = 90)
+
+![](Excercise1_final_files/figure-markdown_strict/con_class-2.png)
+
+    green_buildings_con = subset(green_buildings, age<=50 & (class_a==1 | class_b==1))
+    non_green_buildings_con = subset(non_green_buildings, age<=50 & (class_a==1 | class_b==1))
+
+Then we calculate how much the premium in rent is brought by green
+rating. We first group the buildings based on cluster, and then
+calculate the difference between the median of green building's rent and
+that of non-green buildings within the same cluster. The mean of
+difference among all clusters is 2.2 which is our expected premium rent.
+
+    non_green_clusters<- non_green_buildings_con%>%
+      group_by(cluster)%>%
+      summarise(rent_mean = mean(Rent),
+                rent_median = median(Rent))
+    green_clusters<- green_buildings_con%>%
+      group_by(cluster)%>%
+      summarise(rent_mean_g = mean(Rent),
+                rent_median_g = median(Rent))
+    rent_clusters = merge(x=non_green_clusters, y=green_clusters, by="cluster", all.y = TRUE)
+    rent_clusters$median_premium = rent_clusters$rent_median_g - rent_clusters$rent_median
+    mean(rent_clusters$median_premium, na.rm = TRUE)
+
+    ## [1] 2.201897
+
+Further in the report:
+
+> Based on the extra revenue we would make, we would recuperate these
+> costs in $5000000/650000 = 7.7 years. Even if our occupancy rate were
+> only 90%, we would still recuperate the costs in a little over 8
+> years.
+
+It is such a strong assumption that it assumes a constant leasing rate
+and constant rent over the life cycle of the building. Is that true? We
+create a new factor, <i>LR</i>, which is <i>leasing\_rate × Rent</i>.
+With a fixed building size, this feature is proportional to the total
+leasing revenue. How does it change with age? We selected buildings less
+than 50 years old and in class A or B and here is the plot:
+
+    library(kknn)
+    buildings_con = subset(buildings, age<=50&(class_a==1 | class_b==1))
+    buildings_con$LR = buildings_con$leasing_rate * buildings_con$Rent
+    model = train.kknn(LR ~ age, data = buildings_con, ks= 20)
+    newdata = as.data.frame(seq(1, 50))
+    colnames(newdata) = c("age")
+    predictions = predict(model, newdata)
+    plot(buildings_con$age, buildings_con$LR,pch=19, cex=0.8,ylab= "LR", xlab="Age", col="darkgray", main = "Total revenue")
+    lines(newdata$age, predictions, type="l", col='red', lwd=2)
+    legend(32, 20000, c("KNN Regression"), lwd=2.5,col="red")
+
+![](Excercise1_final_files/figure-markdown_strict/over_age-1.png)
+
+Each building is a gray dot in the plot. We draw a line with KNN (k set
+to 20) to show a smooth general trend of LR over age. It turns out that
+the total revenue doesn't go down with an increasing age. Therefore, we
+could assume that the 2.2 premium for green rating holds for at least
+the first 50 years. And for the occupancy rate:
+
+    hist(green_buildings_con$leasing_rate, breaks = 50, xlim=c(50, 100), ylab='', main='Leasing Rate for Green Buildings', xlab='')
+
+![](Excercise1_final_files/figure-markdown_strict/o_rate-1.png)
+
+The leasing rate for green buildings is highly left-skewed, so the
+median is a better estitamation for our building, which is 92.9%.
+Besides revenue, the cost for green buildings could potentially be
+higher than non-green ones. Without enough information to quantify that,
+we assume that the extra cost is about 5% of total revenue. The median
+of green buildings' rent is $30, which makes the cost $1.5.
+
+Therefore, the annual extra revenue from green rating is ($2.2-$1.5) ×
+92.9% × 250,000 (size) = $162,757 and it needs $5,000,000 / $162,757 =
+30 years to recuperate the extra cost. 30 years as the payback period of
+an investment is too long and makes the company exposed to industry
+fluctuations and external risks. We would suggest not building the green
+building.
