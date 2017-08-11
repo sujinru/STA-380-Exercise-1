@@ -170,6 +170,9 @@ an investment is too long and makes the company exposed to industry
 fluctuations and external risks. We would suggest not building the green
 building.
 
+Bootstrapping
+=============
+
     mystocks <- c("SPY", "TLT", "LQD", "EEM", "VNQ")
     getSymbols(mystocks)
 
@@ -750,23 +753,26 @@ range from a loss of 26063 to a gain of 37979.
 </tbody>
 </table>
 
-> We delete the following four categories in order to make our market
-> segmentation more meaningful, spam, adult, uncategorize, and chatter.
-> Since adult and spam are categories that are supposed to be filtered
-> and contain improper contents, and uncategorize and chatter have no
-> special meanings. Therefore, we delete these four columns.
+Market Segmentation
+===================
+
+We delete the following four categories in order to make our market
+segmentation more meaningful, spam, adult, uncategorize, and chatter.
+Since adult and spam are categories that are supposed to be filtered and
+contain improper contents, and uncategorize and chatter have no special
+meanings. Therefore, we delete these four columns.
 
     discard<-c('spam','adult','uncategorize','chatter')
     social_market<-social_market[,!names(social_market)%in%discard]
 
-> Since certain high-frequency terms have little discriminating power
-> like photo-sharing, we use TF-IDF to recalculate the weight of each
-> term for every follower. TF stands for term-frequency, measuring how
-> frequent a term occurs in a follower's tweets: the more frequent a
-> term occurs, the more important it is to the follower; IDF stands for
-> inverse-document-frequency, measuring how frequent the term occurs in
-> the whole dataset: the more frequent a term occurs, the less important
-> it is to every follower.
+Since certain high-frequency terms have little discriminating power like
+photo-sharing, we use TF-IDF to recalculate the weight of each term for
+every follower. TF stands for term-frequency, measuring how frequent a
+term occurs in a follower's tweets: the more frequent a term occurs, the
+more important it is to the follower; IDF stands for
+inverse-document-frequency, measuring how frequent the term occurs in
+the whole dataset: the more frequent a term occurs, the less important
+it is to every follower.
 
     #TFIDF
     TF<-social_market[,-1]/rowSums(social_market[,-1])
@@ -775,20 +781,20 @@ range from a loss of 26063 to a gain of 37979.
     IDF<-as.numeric(log(nrow(social_market)/EXI_NUM))
     TFIDF = data.frame(t(t(TF)*IDF))
 
-> We use 'cosine' as a measurement for the similarity. It calculates the
-> cosine of the angle between two vectors It measures difference in
-> orientation instead of magnitude. For example, we have 3 follower
-> A,B,C with features like A={'travelling':10,'cooking':5},
-> B={'travelling':20,'cooking':10}, C={'travelling':10,'cooking':12}, we
-> would consider A more similar with B than C even though A and C are
-> 'closer'.
+We use 'cosine' as a measurement for the similarity. It calculates the
+cosine of the angle between two vectors It measures difference in
+orientation instead of magnitude. For example, we have 3 follower A,B,C
+with features like A={'travelling':10,'cooking':5},
+B={'travelling':20,'cooking':10}, C={'travelling':10,'cooking':12}, we
+would consider A more similar with B than C even though A and C are
+'closer'.
 
     #hclust
     d.cosine<-dist(TFIDF,method='cosine')
     hc.ratio.cosine<-hclust(d.cosine,method='ward.D2')
 
-> By looking at different outputs of different Ks, we chose k=3 as our
-> final parameter since its output makes more sense to us.
+By looking at different outputs of different Ks, we chose k=3 as our
+final parameter since its output makes more sense to us.
 
     #hclust
     #choose cluster 3
@@ -857,18 +863,19 @@ range from a loss of 26063 to a gain of 37979.
 </tbody>
 </table>
 
-> From the topics of high TFIDF-socres in the clusters, we can infer
-> that first cluster represents people who care a lot about health and
-> fitness, mostly likely to be well-educated people and housewives; the
-> second cluster represents college/high school students; the third
-> cluster represents people who care about current events, most likely
-> working people. Marketing strategy for each group: cluster one: We
-> recommend the company could post some healthy cooking recipes which
-> use company's products, and the company can cooperate with some famous
-> chefs to promote their products, such as Gordon Ramsay. cluster two:
-> The company should launch interesting social media campaigns to
-> attract this market segment, such as campaigns combining simple gaming
-> and promotions together. cluster three: The company can sponsor some
-> social events or even make some political contributions to improce
-> their social exposures on newspaper, TV and news website to target
-> this group.
+From the topics of high TFIDF-socres in the clusters, we can infer that
+first cluster represents people who care a lot about health and fitness,
+mostly likely to be well-educated people and housewives; the second
+cluster represents college/high school students; the third cluster
+represents people who care about current events, most likely working
+people.
+
+Marketing strategy for each group: <br/> cluster one: We recommend the
+company could post some healthy cooking recipes which use company's
+products, and the company can cooperate with some famous chefs to
+promote their products, such as Gordon Ramsay. <br/> cluster two: The
+company should launch interesting social media campaigns to attract this
+market segment, such as campaigns combining simple gaming and promotions
+together. <br/> cluster three: The company can sponsor some social
+events or even make some political contributions to improce their social
+exposures on newspaper, TV and news website to target this group.
